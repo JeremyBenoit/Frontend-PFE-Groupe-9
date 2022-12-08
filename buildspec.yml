@@ -4,7 +4,6 @@ phases:
   build:
     commands:
       - echo Build Phase
-      - cd ./Pokemon-Project-Frontend/
       - npm install
       - npm run build
   post_build:
