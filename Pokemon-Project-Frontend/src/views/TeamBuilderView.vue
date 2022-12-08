@@ -1,15 +1,11 @@
 <script setup>
 import NavBar from '../components/NavBar.vue'
 import Footer from '../components/Footer.vue'
-import About from '../components/About.vue'
+import TeamBuilder from '../components/TeamBuilder.vue'
 </script>
 
 <template>
-  <NavBar />
-  <About />
-  <Footer />
+    <NavBar />
+    <TeamBuilder />
+    <Footer />
 </template>
-
-<style>
-
-</style>

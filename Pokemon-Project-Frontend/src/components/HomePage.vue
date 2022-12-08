@@ -9,7 +9,17 @@ defineProps({
 
 <template>
   <div class="HomePage"> 
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta odit numquam dolores cupiditate consequuntur ratione quas debitis in quibusdam doloribus officiis eius, dolorum corrupti expedita modi rem molestias enim dignissimos.
+    <div class="container">
+      <div class="row row-cols-3">
+        <div class="col">
+          <button class="btn btn-primary">Most liked</button>
+        </div>
+        <div class="col">
+          <button class="btn btn-primary">Most recent</button>
+        </div>
+      </div>
+    </div>
+    <h1>this is the home page</h1>
   </div>
 </template>
 

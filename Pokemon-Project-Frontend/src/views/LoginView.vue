@@ -1,15 +1,11 @@
 <script setup>
 import NavBar from '../components/NavBar.vue'
 import Footer from '../components/Footer.vue'
-import About from '../components/About.vue'
+import Login from '../components/Login.vue'
 </script>
 
 <template>
-  <NavBar />
-  <About />
-  <Footer />
+    <NavBar />
+    <Login />
+    <Footer />
 </template>
-
-<style>
-
-</style>
