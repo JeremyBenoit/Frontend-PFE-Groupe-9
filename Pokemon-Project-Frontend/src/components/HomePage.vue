@@ -1,10 +1,5 @@
 <script setup>
-defineProps({
-  msg: {
-    type: String,
-    required: true
-  }
-})
+import OverViewTeam from './OverviewTeam.vue';
 </script>
 
 <template>
@@ -20,6 +15,7 @@ defineProps({
       </div>
     </div>
     <h1>this is the home page</h1>
+    <OverViewTeam />
   </div>
 </template>
 
