@@ -6,7 +6,6 @@ import { getAllPokemon } from '../utils/pokebuildApi'
 let allPoke;
 
 allPoke = await getAllPokemon();
-console.log(allPoke);
 
 let teamPoke = [ '-1','-1','-1','-1','-1','-1' ]
 </script>
@@ -50,6 +49,12 @@ let teamPoke = [ '-1','-1','-1','-1','-1','-1' ]
                 </div>
             </div>
             <div class="col-8"></div>
+        </div>
+    </div>
+    <div class="container"></div>
+    <div class="row">
+        <div v-for="poke in allPoke" class="col">
+             <img :src="poke.sprite" v-bind:id="poke.id">
         </div>
     </div>
 </template>

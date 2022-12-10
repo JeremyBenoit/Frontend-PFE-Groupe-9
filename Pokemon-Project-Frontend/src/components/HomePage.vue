@@ -4,7 +4,7 @@ import OverViewTeam from './OverviewTeam.vue';
 
 <template>
   <div class="HomePage"> 
-    <div class="container">
+    <div class="container buttonsFilter">
       <div class="row row-cols-3">
         <div class="col">
           <button class="btn btn-primary">Most liked</button>
@@ -14,7 +14,6 @@ import OverViewTeam from './OverviewTeam.vue';
         </div>
       </div>
     </div>
-    <h1>this is the home page</h1>
     <OverViewTeam />
   </div>
 </template>
@@ -22,5 +21,10 @@ import OverViewTeam from './OverviewTeam.vue';
 <style scoped>
 .HomePage {
   margin-bottom: 100px;
+}
+
+.buttonsFilter{
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 </style>

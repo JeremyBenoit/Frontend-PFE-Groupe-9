@@ -13,7 +13,7 @@ import heart from '../assets/heart.png';
 let images = [poke1, poke2, poke3, poke4, poke5, poke6]
 </script>
 
-<template #default>
+<template>
     <div class="card" style="width: 100%;">
         <div class="card-body">
             <h5 class="card-title">Pokemon Team</h5>
@@ -44,5 +44,9 @@ let images = [poke1, poke2, poke3, poke4, poke5, poke6]
 
 .nrbHearts{
     font-size: 175%;
+}
+
+.card-title {
+    margin-left: 45%;
 }
 </style>
