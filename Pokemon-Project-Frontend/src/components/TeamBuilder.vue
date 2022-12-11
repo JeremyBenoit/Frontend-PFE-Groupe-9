@@ -1,20 +1,64 @@
 <script setup>
 import pokeball from '../assets/pokeball.png'
-
 import { getAllPokemon } from '../utils/pokebuildApi'
 
-let allPoke;
+let componentKey = 0;
 
+let allPoke;
 allPoke = await getAllPokemon();
 
-let teamPoke = [ '-1','-1','-1','-1','-1','-1' ]
+let lastPokePointer = -1;
+let teamPoke = [ -1,-1,-1,-1,-1,-1 ];
+const addPokemon = (idPokemon) => {
+    if(lastPokePointer == 5){
+        console.log("team complete");
+        return;
+    }
+    lastPokePointer++;
+    teamPoke[lastPokePointer] = idPokemon;
+    let htmlPokemon = document.getElementById("Poke"+lastPokePointer);
+    
+    let imagePokemon = document.getElementById(idPokemon);
+    htmlPokemon.innerHTML = imagePokemon.innerHTML;
+
+    console.log(teamPoke);
+}
+
+const removePokemon = (indexPoke) => {
+    let indexPokemonToRemove = parseInt(indexPoke[4])
+    if(lastPokePointer==-1) {
+        console.log("team vide : rien à remove");
+        return;
+    }
+
+    console.log("index poke to be removed : " + indexPoke);
+    
+    console.log("last poke removed : " + indexPokemonToRemove == lastPokePointer);
+    
+    for (let index = indexPokemonToRemove; index < lastPokePointer; index++) {
+        teamPoke[index] = teamPoke[index+1];
+
+        let pokemonTempHtml = document.getElementById('Poke'+index);
+        let pokemonNextHtml = document.getElementById('Poke'+(index+1));
+        pokemonTempHtml.innerHTML = pokemonNextHtml.innerHTML;
+    }
+    
+
+    teamPoke[lastPokePointer] = -1;
+    let lastPokemonHtml = document.getElementById('Poke'+lastPokePointer);
+    lastPokemonHtml.innerHTML = `<img src="${pokeball}" class="pokeballPic">`
+
+    lastPokePointer--;
+    console.log(teamPoke);
+}
+
 </script>
 
-<template #default>
+<template>
     <div class="row pokemonTeam">
         <div v-for="(poke, index) in teamPoke" class="col">
-            <div v-if="poke == '-1'">
-                <div v-bind:id="index"> <img :src="pokeball" class="pokeballPic"> </div>
+            <div v-if="poke == -1">
+                <div v-bind:id="'Poke'+index" v-on:click="removePokemon('Poke'+index)"> <img :src="pokeball" class="pokeballPic"> </div>
             </div>
             <div v-else>y'a un probleme xd {{poke}}</div>
         </div>
@@ -51,10 +95,9 @@ let teamPoke = [ '-1','-1','-1','-1','-1','-1' ]
             <div class="col-8"></div>
         </div>
     </div>
-    <div class="container"></div>
-    <div class="row">
-        <div v-for="poke in allPoke" class="col">
-             <img :src="poke.sprite" v-bind:id="poke.id">
+    <div class="row" v-once>
+        <div v-for="poke in allPoke" class="col" v-bind:id="poke.id">
+             <img :src="poke.sprite" v-on:click="addPokemon(poke.id)">
         </div>
     </div>
 </template>
