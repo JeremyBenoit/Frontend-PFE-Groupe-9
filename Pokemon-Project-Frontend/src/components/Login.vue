@@ -1,34 +1,48 @@
-<script setup>
-import {login, register} from "../utils/backend.js"
+<script>
+import { login, register } from "@/utils/backend"
 
-const registerFormHandler = async (e) => {
-  const form = e.target
-  const res = await register(form.pseudo.value, form.password.value)
-  if (res == undefined) {
-    //TODO phrases utiles
-    document.getElementById("formRegister").insertAdjacentHTML("beforebegin", `
+export default {
+  created () {
+    if(localStorage.token != null && localStorage.pseudo != null){
+      this.$router.push({ name: 'profile' });
+    }
+  },
+  methods: {
+    async loginFormHandler(e) {
+      const form = e.target
+      const res = await login(form.pseudo.value, form.password.value)
+      if (res == null) {
+        //TODO phrases utiles
+        document.getElementById("formLogin").insertAdjacentHTML("beforebegin", `
       <div class="alert alert-warning alert-dismissible fade show" role="alert">
         <strong>Holy guacamole!</strong> You should check in on some of those fields below.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
     `)
-  }
-  //TODO redirect
-}
-
-const loginFormHandler = async (e) => {
-  const form = e.target
-  const res = await login(form.pseudo.value, form.password.value)
-  if (res == null) {
-    //TODO phrases utiles
-    document.getElementById("formLogin").insertAdjacentHTML("beforebegin", `
+        return;
+      }
+      localStorage.token = res;
+      localStorage.pseudo = form.pseudo.value;
+      this.$router.push({ name: 'profile' });
+    },
+    async registerFormHandler(e) {
+      const form = e.target
+      const res = await register(form.pseudo.value, form.password.value)
+      if (res == null) {
+        //TODO phrases utiles
+        document.getElementById("formRegister").insertAdjacentHTML("beforebegin", `
       <div class="alert alert-warning alert-dismissible fade show" role="alert">
         <strong>Holy guacamole!</strong> You should check in on some of those fields below.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
     `)
+        return;
+      }
+      localStorage.token = res;
+      localStorage.pseudo = form.pseudo.value;
+      this.$router.push({ name: 'profile' });
+    }
   }
-  //TODO redirect
 }
 </script>
 

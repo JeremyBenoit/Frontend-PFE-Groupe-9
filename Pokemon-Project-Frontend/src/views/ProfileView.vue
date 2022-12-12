@@ -6,6 +6,13 @@
 
 <template>
   <NavBar />
-  <Profile />
+  <Suspense>
+    <template #default>
+      <Profile />
+    </template>
+    <template #fallback>
+      <div>Loading ...</div>
+    </template>
+  </Suspense>
   <Footer />
 </template>

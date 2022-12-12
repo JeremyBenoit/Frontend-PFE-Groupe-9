@@ -26,7 +26,34 @@ const register = async (pseudo, password) => {
     }
 }
 
+const getAllLikedByUserId = async (token, pseudo) => {
+    try {
+        let res = await axios.get(baseURL.concat(`/teams/likes/users/${pseudo}`),{
+            headers: {
+                'Authorization': token
+            }
+        })
+        return res.data
+    } catch (e){
+        return null
+    }
+}
+const getAllByAuthorId = async  (token, pseudo) => {
+    try {
+        let res = await axios.get(baseURL.concat(`/teams/authors/${pseudo}`),{
+            headers: {
+                'Authorization': token
+            }
+        })
+        return res.data
+    } catch (e){
+        return null
+    }
+}
+
 export {
     login,
-    register
+    register,
+    getAllLikedByUserId,
+    getAllByAuthorId
 }

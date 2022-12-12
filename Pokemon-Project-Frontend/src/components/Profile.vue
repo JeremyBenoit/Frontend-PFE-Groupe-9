@@ -1,27 +1,28 @@
 <script>
-
-import poke1 from "../assets/images/001.png";
-import poke2 from "../assets/images/002.png";
-import poke3 from "../assets/images/003.png";
-import poke4 from "../assets/images/004.png";
-import poke5 from "../assets/images/005.png";
-import poke6 from "../assets/images/006.png";
-import poke7 from "../assets/images/007.png";
-
-const likedAndCreatedTeams = [poke1, poke2, poke3, poke4, poke5, poke6];
+import { getAllLikedByUserId, getAllByAuthorId } from "@/utils/backend"
 
 export default {
   data() {
     return {
-      teams: likedAndCreatedTeams,
+      teams: [],
     }
   },
+  created() {
+    if(localStorage.token == null || localStorage.pseudo == null){
+      this.$router.push({ name: 'login' });
+      return;
+    }
+    const fetchData = async () => {
+      this.teams = await getAllLikedByUserId(localStorage.token,localStorage.pseudo)
+    };
+    fetchData();
+  },
   methods: {
-    changeToLikedTeams() {
-      this.teams = [poke1, poke2, poke3, poke4, poke5, poke6]
+    async changeToLikedTeams() {
+      this.teams = await getAllLikedByUserId(localStorage.token,localStorage.pseudo)
     },
-    changeToMyTeams() {
-      this.teams = [poke1, poke2, poke3, poke4, poke5, poke7];
+    async changeToMyTeams() {
+      this.teams = await getAllByAuthorId(localStorage.token,localStorage.pseudo)
     }
   }
 }
