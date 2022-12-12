@@ -11,6 +11,9 @@
                     <li class="nav-item">
                         <RouterLink to="/buildTeam" class="nav-link">Team Builder</RouterLink>
                     </li>
+                  <li class="nav-item">
+                        <RouterLink to="/team" class="nav-link">Team</RouterLink>
+                    </li>
                 </ul>
             <RouterLink to="/login" class="nav-link"><button type="button" class="btn btn-primary">Login</button></RouterLink>  
             

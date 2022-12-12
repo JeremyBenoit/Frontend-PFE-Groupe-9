@@ -1,0 +1,37 @@
+.pokeballPic {
+  width: 50%;
+  height: auto;
+}
+
+.pokemonTeam {
+  margin: 30px;
+  text-align: center;
+  background: aquamarine;
+}
+
+.strengthWeakness{
+  margin-top: 5px;
+  margin-bottom: 5px;
+  text-align: center;
+}
+.comments {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  text-align: center;
+}
+.heart {
+  width: 2%;
+  height: auto;
+}
+
+.nrbHearts{
+  font-size: 175%;
+}
+.type{
+  width: 40px;
+  height: auto;
+}
+h3{
+  color: cornflowerblue;
+  text-align: center;
+}
