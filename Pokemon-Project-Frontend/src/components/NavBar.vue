@@ -12,8 +12,9 @@
                         <RouterLink to="/buildTeam" class="nav-link">Team Builder</RouterLink>
                     </li>
                 </ul>
-            <RouterLink to="/login" class="nav-link"><button type="button" class="btn btn-primary">Login</button></RouterLink>  
-            
+            <RouterLink to="/login" class="nav-link"><button type="button" class="btn btn-primary">Login</button></RouterLink>
+
+            <RouterLink to="/profile" class="nav-link"><button type="button" class="btn btn-primary">Profile</button></RouterLink>
             </div>
         </div>
     </nav>
