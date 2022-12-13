@@ -1,16 +1,11 @@
+import axios from "axios"
+const baseURL = "http://localhost:9000"
+
 async function getTeam() {
   try {
-    const option = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }
-
-    const response = await fetch("http://localhost:9000/teams/")
-    if(!response.ok) return "probleme get team pokemons"
+    const response = await axios.get(baseURL.concat('/teams/'))
     console.log("test")
-    return response.json();
+    return response.data;
   } catch (err) {
     console.error("error: ", err);
   }

@@ -1,52 +1,18 @@
-<script setup>
-import './teamPokemon.css';
+<script>
+export default {props:['teamPokemon']};
+</script>
 
-import pokeball from '../../assets/pokeball.png'
-
-import { getAllPokemon } from '@/utils/pokebuildApi'
-import {getTeam} from "@/utils/teamsAPI";
-import heart from '../../assets/heart.png';
-
-
-const allPokemon = await getAllPokemon();
-console.log(allPokemon.at(0))
-
-const team = await getTeam();
+<script setup >
+import OneTeamCard from "@/components/OneTeamCard.vue";
 
 const name = "test";
-const pokemons = [1,2,3,4,5,6];
 const comments = ['test','test'];
-let likes = 3;
-
-const addLikes = () => {
-  likes++;
-  document.getElementById("likes").innerHTML = likes;
-}
 </script>
 
 
 <template>
   <h3>Team {{name}}</h3>
-  <div class="row pokemonTeam">
-    <div v-for="(poke) in pokemons" class="col">
-      <div>
-        <div v-if="poke === -1">
-          <img :src="pokeball" class="pokeballPic">
-        </div>
-        <div v-else class="row">
-          <img :src="allPokemon.at(poke-1).sprite">
-          <p>{{allPokemon.at(poke-1).name}}</p>
-          <div v-for="(type) in allPokemon.at(poke-1).apiTypes" class="col">
-            <img :src="type.image" class="type">
-            <p>{{type.name}}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="nrbHearts" v-on:click="addLikes()">
-      <p id="likes">{{likes}} <img :src="heart" class="heart"></p>
-    </div>
-  </div>
+  <OneTeamCard :teamPokemon="teamPokemon"/>
   <div class="strengthWeakness">
     <h3>Force et faiblesse</h3>
     force et faiblesse à faire
@@ -60,3 +26,20 @@ const addLikes = () => {
     </div>
   </div>
 </template>
+
+<style scoped>
+h3{
+  color: cornflowerblue;
+  text-align: center;
+}
+.strengthWeakness{
+  margin-top: 5px;
+  margin-bottom: 5px;
+  text-align: center;
+}
+.comments {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  text-align: center;
+}
+</style>

@@ -2,12 +2,16 @@
 import NavBar from '../components/NavBar.vue'
 import Footer from '../components/Footer.vue'
 import TeamPokemon from '../components/teamPokemon/TeamPokemon.vue'
+import {getTeam} from "@/utils/teamsAPI";
+
+//const teamPokemon = await getTeam()
+const teamPokemon = "a faire"
 </script>
 <template>
   <NavBar />
   <Suspense>
     <template #default>
-      <TeamPokemon />
+      <TeamPokemon :teamPokemon="teamPokemon"/>
     </template>
     <template #fallback>
       <div class="spinner-border text-primary" role="status">
