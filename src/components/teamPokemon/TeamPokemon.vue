@@ -1,5 +1,5 @@
 <script>
-export default {props:['teamPokemon']};
+export default {props:['teamId']};
 </script>
 
 <script setup >
@@ -12,7 +12,7 @@ const comments = ['test','test'];
 
 <template>
   <h3>Team {{name}}</h3>
-  <OneTeamCard :teamPokemon="teamPokemon"/>
+  <OneTeamCard :teamId="teamId"/>
   <div class="strengthWeakness">
     <h3>Force et faiblesse</h3>
     force et faiblesse à faire
