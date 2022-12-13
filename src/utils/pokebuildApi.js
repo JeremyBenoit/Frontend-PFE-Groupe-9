@@ -9,6 +9,26 @@ async function getAllPokemon() {
     }
 }
 
+async function getPokemonByType(type) {
+  try {
+      const response = await fetch("https://pokebuildapi.fr/api/v1/pokemon/type/"+type)
+      if(!response.ok) console.log("probleme api pokemon build get all pokemons by type"); 
+      return response.json();
+  } catch (err) {
+      console.error("error: ", err);
+  }
+}
+
+async function getPokemonByGen(gen) {
+  try {
+      const response = await fetch("https://pokebuildapi.fr/api/v1/pokemon/generation/"+gen)
+      if(!response.ok) console.log("probleme api pokemon build get all pokemons by type"); 
+      return response.json();
+  } catch (err) {
+      console.error("error: ", err);
+  }
+}
+
 async function getAllType(){
     try {
         const response = await fetch("https://pokebuildapi.fr/api/v1/types");
@@ -58,5 +78,7 @@ async function getDefensiveCoverage(pokeTeam) {
 export {
     getAllPokemon,
     getAllType,
-    getDefensiveCoverage
+    getDefensiveCoverage,
+    getPokemonByType,
+    getPokemonByGen
 };
