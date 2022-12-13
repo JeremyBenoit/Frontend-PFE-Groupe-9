@@ -1,9 +1,15 @@
 <script setup>
 import pokeball from '../assets/pokeball.png'
-import { getAllPokemon, getDefensiveCoverage } from '../utils/pokebuildApi'
+import { getAllPokemon, getDefensiveCoverage, getPokemonsFromGen, getPokemonsFromType, getAllType } from '../utils/pokebuildApi'
 
 let allPoke;
+let allType;
 allPoke = await getAllPokemon();
+allType = await getAllType();
+
+
+let numberGeneration = 8;
+let filterAxises = ["gen", "types"];
 
 let lastPokePointer = -1;
 let teamPoke = [ -1,-1,-1,-1,-1,-1 ];
@@ -53,6 +59,43 @@ const displayDefensiveCoverage = async () => {
     defensifeCoverageHtml.innerHTML = tempHtml;
 
 }
+
+const filterPokemon = async (filterAxis, filter) => {
+    let allPokemonHtml = document.getElementById("allPokemon");
+    allPokemonHtml.hidden = true;
+
+    let filteredPokemons;
+
+    if (filterAxis == "gen"){
+        filteredPokemons = await getPokemonsFromGen(filter);
+    } else {
+        filteredPokemons = await getPokemonsFromType(filter);
+    }
+    
+    let tempHtml= `<div class="row">`
+    filteredPokemons.forEach(pokemon => {
+        tempHtml += `<div class="col"><img id="filteredPoke${pokemon.id}" src=${pokemon.sprite}> </div>`
+    });
+    tempHtml += `</div>`
+    
+    let filteredPokemonHtml = document.getElementById("filteredPokemon");
+    filteredPokemonHtml.innerHTML = tempHtml;
+    
+    filteredPokemons.forEach(pokemon => {
+        let tempFilteredPokemon = document.getElementById("filteredPoke"+pokemon.id);
+        tempFilteredPokemon.addEventListener("click", () => {
+            addPokemon(pokemon.id);
+        });
+    })
+}
+
+const resetFilters = () => {
+    let filteredPokemonHtml = document.getElementById("filteredPokemon");
+    filteredPokemonHtml.innerHTML = ``;
+
+    let allPokemonHtml = document.getElementById("allPokemon");
+    allPokemonHtml.hidden = false;
+}
 </script>
 
 <template>
@@ -71,9 +114,9 @@ const displayDefensiveCoverage = async () => {
                         Types
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="#">type 1</a></li>
-                        <li><a class="dropdown-item" href="#">type 2</a></li>
-                        <li><a class="dropdown-item" href="#">type 3</a></li>
+                        <li v-for="types in allType">
+                            <a class="dropdown-item" v-on:click="filterPokemon(filterAxises[1], types.name)"> {{ types.name }} </a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -83,27 +126,33 @@ const displayDefensiveCoverage = async () => {
                         Generation
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="#">gen 1</a></li>
-                        <li><a class="dropdown-item" href="#">gen 2</a></li>
-                        <li><a class="dropdown-item" href="#">gen 3</a></li>
+                        <li v-for="n in numberGeneration">
+                            <a class="dropdown-item" v-on:click="filterPokemon(filterAxises[0], n)">gen {{ n }}</a>
+                        </li>
                     </ul>
                 </div>
             </div>
-            <div class="col-8"></div>
+            <div class="col-5"></div>
+            <div class="col-3">
+                <button class="btn btn-primary" type="button" v-on:click="resetFilters()">Voir tous les pokemons</button>
+            </div>
         </div>
         <div class="strengthWeakness">
             <button class="btn btn-primary" v-on:click="displayDefensiveCoverage()"> Vérifier forces et faiblesses </button>
             <div id="defensiveCoverage"></div>
         </div>
     </div>
-    <div class="row" v-once>
-        <div v-for="poke in allPoke" class="col" v-bind:id="poke.id">
-             <img :src="poke.sprite" v-on:click="addPokemon(poke.id)">
+    <div id="allPokemon">
+        <div class="row">
+            <div v-for="poke in allPoke" class="col" v-bind:id="poke.id">
+                <img :src="poke.sprite" v-on:click="addPokemon(poke.id)">
+            </div>
         </div>
     </div>
+    <div id="filteredPokemon"></div>
 </template>
 
-<style scoped>
+<style>
 .pokeballPic {
     width: 50%;
     height: auto;
@@ -123,4 +172,5 @@ const displayDefensiveCoverage = async () => {
     margin-top: 5px;
     margin-bottom: 5px;
 }
+
 </style>
