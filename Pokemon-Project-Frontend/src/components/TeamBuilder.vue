@@ -1,8 +1,6 @@
 <script setup>
 import pokeball from '../assets/pokeball.png'
-import { getAllPokemon } from '../utils/pokebuildApi'
-
-let componentKey = 0;
+import { getAllPokemon, getDefensiveCoverage } from '../utils/pokebuildApi'
 
 let allPoke;
 allPoke = await getAllPokemon();
@@ -20,20 +18,13 @@ const addPokemon = (idPokemon) => {
     
     let imagePokemon = document.getElementById(idPokemon);
     htmlPokemon.innerHTML = imagePokemon.innerHTML;
-
-    console.log(teamPoke);
 }
 
 const removePokemon = (indexPoke) => {
     let indexPokemonToRemove = parseInt(indexPoke[4])
     if(lastPokePointer==-1) {
-        console.log("team vide : rien à remove");
         return;
     }
-
-    console.log("index poke to be removed : " + indexPoke);
-    
-    console.log("last poke removed : " + indexPokemonToRemove == lastPokePointer);
     
     for (let index = indexPokemonToRemove; index < lastPokePointer; index++) {
         teamPoke[index] = teamPoke[index+1];
@@ -42,16 +33,26 @@ const removePokemon = (indexPoke) => {
         let pokemonNextHtml = document.getElementById('Poke'+(index+1));
         pokemonTempHtml.innerHTML = pokemonNextHtml.innerHTML;
     }
-    
 
     teamPoke[lastPokePointer] = -1;
     let lastPokemonHtml = document.getElementById('Poke'+lastPokePointer);
     lastPokemonHtml.innerHTML = `<img src="${pokeball}" class="pokeballPic">`
 
     lastPokePointer--;
-    console.log(teamPoke);
 }
 
+const displayDefensiveCoverage = async () => {
+    let defensifeCoverage = await getDefensiveCoverage(teamPoke);
+    let defensifeCoverageHtml = document.getElementById("defensiveCoverage");
+
+    let tempHtml = ``;
+    defensifeCoverage.forEach(defenseType => {
+        tempHtml += `<div class="${defenseType.result}">${defenseType.name} : ${defenseType.message}</div>`
+    });
+
+    defensifeCoverageHtml.innerHTML = tempHtml;
+
+}
 </script>
 
 <template>
@@ -60,11 +61,7 @@ const removePokemon = (indexPoke) => {
             <div v-if="poke == -1">
                 <div v-bind:id="'Poke'+index" v-on:click="removePokemon('Poke'+index)"> <img :src="pokeball" class="pokeballPic"> </div>
             </div>
-            <div v-else>y'a un probleme xd {{poke}}</div>
         </div>
-    </div>
-    <div class="strengthWeakness">
-        force et faiblesse à faire
     </div>
     <div class="container filterButtons">
         <div class="row">
@@ -93,6 +90,10 @@ const removePokemon = (indexPoke) => {
                 </div>
             </div>
             <div class="col-8"></div>
+        </div>
+        <div class="strengthWeakness">
+            <button class="btn btn-primary" v-on:click="displayDefensiveCoverage()"> Vérifier forces et faiblesses </button>
+            <div id="defensiveCoverage"></div>
         </div>
     </div>
     <div class="row" v-once>
