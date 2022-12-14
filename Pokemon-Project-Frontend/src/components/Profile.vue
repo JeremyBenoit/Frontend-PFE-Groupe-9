@@ -1,28 +1,50 @@
 <script>
-import { getAllLikedByUserId, getAllByAuthorId } from "@/utils/backend"
+import { getAllLikedByUserId, getAllByAuthorId } from "@/utils/backendRequests"
+import {getAllPokemons} from "@/utils/pokebuildApi";
 
 export default {
   data() {
     return {
       teams: [],
+      allPokemons: [],
+      loading: true
     }
   },
-  created() {
-    if(localStorage.token == null || localStorage.pseudo == null){
-      this.$router.push({ name: 'login' });
+  async created() {
+    if (localStorage.token == null || localStorage.pseudo == null) {
+      this.$router.push({name: 'login'});
       return;
     }
-    const fetchData = async () => {
-      this.teams = await getAllLikedByUserId(localStorage.token,localStorage.pseudo)
-    };
-    fetchData();
+    let res = await getAllLikedByUserId(localStorage.token, localStorage.pseudo)
+    if (res === 401) {
+      localStorage.clear()
+      this.$router.push({name: 'login'});
+      return;
+    }
+    this.allPokemons = await getAllPokemons()
+    this.teams = res
+    this.loading = false
   },
   methods: {
     async changeToLikedTeams() {
-      this.teams = await getAllLikedByUserId(localStorage.token,localStorage.pseudo)
+      let res = await getAllLikedByUserId(localStorage.token, localStorage.pseudo)
+      if(res === 401){
+        localStorage.clear()
+        this.$router.push({name: 'login'});
+        return;
+      }
+      this.teams = res
     },
     async changeToMyTeams() {
-      this.teams = await getAllByAuthorId(localStorage.token,localStorage.pseudo)
+      let res = await getAllByAuthorId(localStorage.token, localStorage.pseudo)
+      if(res === 401){
+        localStorage.clear()
+        this.$router.push({name: 'login'});
+        return;
+      }
+      this.teams = res
+    }, showImage(id) {
+      return this.allPokemons[id-1].sprite
     }
   }
 }
@@ -30,28 +52,33 @@ export default {
 </script>
 
 <template>
-  <div class="container buttonsFilter">
-    <div class="row row-cols-3">
-      <div class="col">
-        <button v-on:click="changeToLikedTeams" class="btn btn-primary">My liked teams</button>
-      </div>
-      <div class="col">
-        <button v-on:click="changeToMyTeams" class="btn btn-primary">My teams</button>
-      </div>
-    </div>
+  <div v-if="loading">
+    <h1 class="text-center">LOADING...</h1>
   </div>
-  <div class="card" style="width: 100%;">
-    <div class="card-body">
-      <h5 class="card-title">Pokemon Team</h5>
-      <div class="container">
-        <div class="row">
-          <div v-for="image in teams" class="col">
-            <img :src="image" class="imagePokemon">
-          </div>
+  <div v-else>
+    <div class="container buttonsFilter">
+      <div class="row row-cols-3">
+        <div class="col">
+          <button v-on:click="changeToLikedTeams" class="btn btn-primary">My liked teams</button>
+        </div>
+        <div class="col">
+          <button v-on:click="changeToMyTeams" class="btn btn-primary">My teams</button>
         </div>
       </div>
-      <div class="nrbHearts">
-        10 <img src='../assets/heart.png' class="heart">
+    </div>
+    <div class="card" style="width: 100%;">
+      <div class="card-body">
+        <h5 class="card-title">Pokemon Team</h5>
+        <div class="container">
+          <div v-for="t in teams" class="row">
+            <div v-for="p in t.pokemons" class="col">
+              <img :src="showImage(p)" class="imagePokemon">
+            </div>
+            <div class="nrbHearts">
+              {{ t.likes.length }} <img src='../assets/heart.png' class="heart">
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

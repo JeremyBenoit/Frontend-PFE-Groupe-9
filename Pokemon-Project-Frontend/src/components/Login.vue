@@ -1,46 +1,58 @@
 <script>
-import { login, register } from "@/utils/backend"
-
+import {login, register} from "@/utils/backendRequests"
+function showError(message, element){
+  document.getElementById(element).insertAdjacentHTML("beforebegin", `
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          ${message}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      `)
+}
 export default {
-  created () {
-    if(localStorage.token != null && localStorage.pseudo != null){
-      this.$router.push({ name: 'profile' });
+  created() {
+    if (localStorage.token != null && localStorage.pseudo != null) {
+      this.$router.push({name: 'profile'});
     }
   },
   methods: {
     async loginFormHandler(e) {
       const form = e.target
       const res = await login(form.pseudo.value, form.password.value)
-      if (res == null) {
-        //TODO phrases utiles
-        document.getElementById("formLogin").insertAdjacentHTML("beforebegin", `
-      <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        <strong>Holy guacamole!</strong> You should check in on some of those fields below.
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-    `)
+      if (typeof res == "number") {
+        if(res === 401){
+          showError("Mot de passe ou pseudo incorrect.", "formLogin")
+        }
+        else {
+          showError("Erreur interne, réessayez plus tard.", "formLogin")
+        }
         return;
       }
       localStorage.token = res;
       localStorage.pseudo = form.pseudo.value;
-      this.$router.push({ name: 'profile' });
+      this.$router.push({name: 'profile'});
     },
     async registerFormHandler(e) {
       const form = e.target
+      if(form.validatePwd.value !== form.password.value){
+        showError("Les mots ne correspondent pas", "formRegister")
+        return;
+      }
       const res = await register(form.pseudo.value, form.password.value)
-      if (res == null) {
-        //TODO phrases utiles
-        document.getElementById("formRegister").insertAdjacentHTML("beforebegin", `
-      <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        <strong>Holy guacamole!</strong> You should check in on some of those fields below.
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-    `)
+      if (typeof res == "number") {
+        if(res === 400){
+          showError("Un ou plusieurs champ sont incorrect.", "formRegister")
+        }
+        else if(res === 409){
+          showError("Pseudo déjà pris.", "formRegister")
+        }
+        else {
+          showError("Erreur interne, réessayez plus tard.", "formRegister")
+        }
         return;
       }
       localStorage.token = res;
       localStorage.pseudo = form.pseudo.value;
-      this.$router.push({ name: 'profile' });
+      this.$router.push({name: 'profile'});
     }
   }
 }

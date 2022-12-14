@@ -1,20 +1,14 @@
-async function getAllPokemon() {
-    try {
-        const option = {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json"
-            }
-        }
-
-        const response = await fetch("https://pokebuildapi.fr/api/v1/pokemon")
-        if(!response.ok) return "probleme api pokemon build get all pokemons"
-        return response.json();
-    } catch (err) {
-        console.error("error: ", err);
-    }
+import axios from "axios"
+const baseURL = "https://pokebuildapi.fr/api/v1/pokemon/"
+async function getAllPokemons() {
+    const res = await axios.get(baseURL).catch(err => {
+            console.error("error: ", err);
+            return []
+    })
+    return res.data
 }
 
+
 export {
-    getAllPokemon,
+    getAllPokemons
 };

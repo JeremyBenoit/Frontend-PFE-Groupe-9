@@ -1,11 +1,11 @@
 <script setup>
 import pokeball from '../assets/pokeball.png'
-import { getAllPokemon } from '../utils/pokebuildApi'
+import { getAllPokemons } from '../utils/pokebuildApi'
 
 let componentKey = 0;
 
 let allPoke;
-allPoke = await getAllPokemon();
+allPoke = await getAllPokemons();
 
 let lastPokePointer = -1;
 let teamPoke = [ -1,-1,-1,-1,-1,-1 ];
