@@ -7,7 +7,6 @@ let allType;
 allPoke = await getAllPokemon();
 allType = await getAllType();
 
-
 let numberGeneration = 8;
 let filterAxises = ["gen", "types"];
 
@@ -57,7 +56,6 @@ const displayDefensiveCoverage = async () => {
     });
 
     defensifeCoverageHtml.innerHTML = tempHtml;
-
 }
 
 const filterPokemon = async (filterAxis, filter) => {
@@ -172,5 +170,4 @@ const resetFilters = () => {
     margin-top: 5px;
     margin-bottom: 5px;
 }
-
 </style>
