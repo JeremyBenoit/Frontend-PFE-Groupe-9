@@ -1,6 +1,6 @@
 <script>
 import { getAllLikedByUserId, getAllByAuthorId } from "@/utils/backendRequests"
-import {getAllPokemon} from "@/utils/pokebuildApi";
+import { getAllPokemon } from "@/utils/pokebuildApi";
 
 export default {
   data() {
@@ -59,10 +59,10 @@ export default {
     <div class="container buttonsFilter">
       <div class="row row-cols-3">
         <div class="col">
-          <button v-on:click="changeToLikedTeams" class="btn btn-primary">My liked teams</button>
+          <button v-on:click="changeToLikedTeams" class="btn btn-primary">Mes teams likés</button>
         </div>
         <div class="col">
-          <button v-on:click="changeToMyTeams" class="btn btn-primary">My teams</button>
+          <button v-on:click="changeToMyTeams" class="btn btn-primary">Mes teams crées</button>
         </div>
       </div>
     </div>

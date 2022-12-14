@@ -1,7 +1,7 @@
 import axios from "axios";
 const baseURL = "http://localhost:9000";
 
-const login = async (pseudo, password) => {
+async function login (pseudo, password) {
     try {
         const res = await axios.post(baseURL.concat("/connect"), {
             pseudo: pseudo,
@@ -14,7 +14,7 @@ const login = async (pseudo, password) => {
 
 }
 
-const register = async (pseudo, password) => {
+async function register (pseudo, password) {
     try {
         const res = await axios.post(baseURL.concat("/register"), {
             pseudo: pseudo,
@@ -26,7 +26,7 @@ const register = async (pseudo, password) => {
     }
 }
 
-const getAllLikedByUserId = async (token, pseudo) => {
+async function getAllLikedByUserId (token, pseudo) {
     try {
         const res = await axios.get(baseURL.concat(`/teams/likes/users/${pseudo}`),{
             headers: {
@@ -38,7 +38,7 @@ const getAllLikedByUserId = async (token, pseudo) => {
         return e.response.status
     }
 }
-const getAllByAuthorId = async  (token, pseudo) => {
+async function getAllByAuthorId(token, pseudo) {
     try {
         const res = await axios.get(baseURL.concat(`/teams/authors/${pseudo}`),{
             headers: {
@@ -51,7 +51,7 @@ const getAllByAuthorId = async  (token, pseudo) => {
     }
 }
 
-const getAllCollection = async (id, token) => {
+async function getAllCollection(id, token) {
     try {
         let res = await axios.get(baseURL.concat(`/collections/user/${id}`),{
             headers: {
@@ -64,7 +64,7 @@ const getAllCollection = async (id, token) => {
     }
 }
 
-const addPokemonToCollection = async (userId, pokemonId, token) => {
+async function addPokemonToCollection(userId, pokemonId, token) {
     try {
         let res = await axios.post(baseURL.concat(`/collections/`),
         {
@@ -81,11 +81,39 @@ const addPokemonToCollection = async (userId, pokemonId, token) => {
     }
 }
 
+async function getOneTeamById(id) {
+    try {
+        const response = await axios.get(baseURL.concat('/teams/one/'+id))
+        return response.data;
+    } catch (err) {
+        console.error("error: ", err);
+    }
+}
+async function getOneTeamByName(name) {
+    try {
+        const response = await axios.get(baseURL.concat('/teams/'+name))
+        return response.data;
+    } catch (err) {
+        console.error("error: ", err);
+    }
+}
+async function getAllTeam() {
+    try {
+        const response = await axios.get(baseURL.concat('/teams/'))
+        return response.data;
+    } catch (err) {
+        console.error("error: ", err);
+    }
+}
+
 export {
     login,
     register,
     getAllLikedByUserId,
     getAllByAuthorId,
     getAllCollection,
-    addPokemonToCollection
+    addPokemonToCollection,
+    getOneTeamById,
+    getAllTeam,
+    getOneTeamByName
 }
