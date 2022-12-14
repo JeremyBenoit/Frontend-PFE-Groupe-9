@@ -1,5 +1,5 @@
 <script setup>
-import pokeball from '../assets/pokeball.png'
+import pokeball from '../assets/images/pokeball.png'
 import { getAllPokemon, getDefensiveCoverage } from '../utils/pokebuildApi'
 
 let allPoke;

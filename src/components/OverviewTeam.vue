@@ -1,16 +1,9 @@
 <script setup>
 import tempTeamData from '../assets/tempTeamData.json'
 
-import poke1 from '../assets/images/001.png';
-import poke2 from '../assets/images/002.png';
-import poke3 from '../assets/images/003.png';
-import poke4 from '../assets/images/004.png';
-import poke5 from '../assets/images/005.png';
-import poke6 from '../assets/images/006.png';
-
 import heart from '../assets/heart.png';
 
-let images = [poke1, poke2, poke3, poke4, poke5, poke6]
+let images = []
 </script>
 
 <template>

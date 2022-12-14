@@ -9,6 +9,17 @@ async function getAllPokemon() {
     }
 }
 
+async function getPokemonById(id) {
+  try {
+
+      const response = await fetch("https://pokebuildapi.fr/api/v1/pokemon/"+id)
+      if(!response.ok) console.log("probleme api pokemon build get pokemon by id"); 
+      return response.json();
+  } catch (err) {
+      console.error("error: ", err);
+  }
+}
+
 async function getPokemonByType(type) {
   try {
       const response = await fetch("https://pokebuildapi.fr/api/v1/pokemon/type/"+type)
@@ -80,5 +91,6 @@ export {
     getAllType,
     getDefensiveCoverage,
     getPokemonByType,
-    getPokemonByGen
+    getPokemonByGen,
+    getPokemonById
 };
