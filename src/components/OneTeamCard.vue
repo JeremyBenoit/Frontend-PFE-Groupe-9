@@ -45,6 +45,5 @@ export default {
 .pokemonTeam {
   margin: 30px;
   text-align: center;
-  background: aquamarine;
 }
 </style>

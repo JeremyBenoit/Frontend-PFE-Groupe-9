@@ -49,7 +49,6 @@ const removePokemon = (indexPoke) => {
 const displayDefensiveCoverage = async () => {
     let defensifeCoverage = await getDefensiveCoverage(teamPoke);
     let defensifeCoverageHtml = document.getElementById("defensiveCoverage");
-
     let tempHtml = ``;
     defensifeCoverage.forEach(defenseType => {
         tempHtml += `<div class="${defenseType.result}">${defenseType.name} : ${defenseType.message}</div>`
@@ -169,5 +168,8 @@ const resetFilters = () => {
 .filterButtons{
     margin-top: 5px;
     margin-bottom: 5px;
+}
+#allPokemon{
+  background: aquamarine;
 }
 </style>

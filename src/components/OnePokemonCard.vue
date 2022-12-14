@@ -28,4 +28,7 @@ export default {
   width: 40px;
   height: auto;
 }
+.OnePoke{
+  background: aquamarine;
+}
 </style>

@@ -4,9 +4,13 @@ export default {props:['teamId']};
 
 <script setup >
 import OneTeamCard from "@/components/OneTeamCard.vue";
+import {getDefensiveCoverage} from "@/utils/pokebuildApi";
+import StrenghtAndWeakness from "@/components/StrenghtAndWeakness.vue";
 
 const name = "test";
 const comments = ['test','test'];
+const pokemons = [1,2,3,4,5,6];
+const wOrf = await getDefensiveCoverage(pokemons)
 </script>
 
 
@@ -15,7 +19,7 @@ const comments = ['test','test'];
   <OneTeamCard :teamId="teamId"/>
   <div class="strengthWeakness">
     <h3>Force et faiblesse</h3>
-    force et faiblesse à faire
+    <StrenghtAndWeakness :wOrf="wOrf"/>
   </div>
   <div class="comments">
     <h3>Comments</h3>
