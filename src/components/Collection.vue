@@ -27,21 +27,8 @@ export default {
   },
   methods: {
     setOrder(newOrder){
+      console.log(newOrder)
         this.order = newOrder;
-        this.updateOrder(this.order);
-    },
-    updateOrder(order){
-        var dateElement = document.getElementById("pokemonsByDate");
-        var pokedexElement = document.getElementById("pokemonsByPokedex");
-        if(order == 'date'){
-            pokedexElement.hidden = true;
-            dateElement.hidden = false;
-        }
-        else if (order == 'pokedex'){
-            dateElement.hidden = true;
-            pokedexElement.hidden = false;
-        }
-        this.$forceUpdate();
     },
     startAnimation(idPokemon){
         var card = document.querySelector(".card");
@@ -172,12 +159,12 @@ export default {
             </div>
         </div>
         <div>
-            <div id="pokemonsByDate" class="row align-items-center" hidden="true">
+            <div v-if="this.order==='date'"  id="pokemonsByDate" class="row align-items-center">
                 <div v-for="poke in myPokemons" class="col" v-bind:id="poke.id">
                      <img class="center" :src="allPokemons[poke.pokemonId-1].sprite">
                 </div>
             </div>
-            <div id="pokemonsByPokedex" class="row align-items-center">
+            <div v-else-if="this.order==='pokedex'"  id="pokemonsByPokedex" class="row align-items-center">
                 <div v-for="poke in [...myPokemons].sort((a,b)=> a.pokemonId > b.pokemonId)" class="col" v-bind:id="poke.id" @click="scaleUp($event)">
                      <img class="center" :src="allPokemons[poke.pokemonId-1].sprite">
                 </div>

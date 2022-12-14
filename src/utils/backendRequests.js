@@ -53,7 +53,7 @@ async function getAllByAuthorId(token, pseudo) {
 
 async function getAllCollection(id, token) {
     try {
-        let res = await axios.get(baseURL.concat(`/collections/user/${id}`),{
+        let res = await axios.get(baseURL.concat(`/collections/users/${id}`),{
             headers: {
                 'Authorization': token
             }

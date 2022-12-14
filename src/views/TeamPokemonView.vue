@@ -10,8 +10,8 @@ import TeamPokemon from '../components/TeamPokemon.vue'
       <TeamPokemon :teamId="$route.params.id"/>
     </template>
     <template #fallback>
-      <div>
-        <img class="loadingGif center" src="../assets/images/loading.gif">
+      <div class="spinner-border text-primary" role="status">
+        <img class="loadingGif" src="../assets/images/loading.gif">
       </div>
     </template>
   </Suspense>

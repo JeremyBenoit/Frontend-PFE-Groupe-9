@@ -11,9 +11,9 @@ import TeamBuilder from '../components/TeamBuilder.vue'
             <TeamBuilder />
         </template>
         <template #fallback>
-          <div>
-            <img class="loadingGif center" src="../assets/images/loading.gif">
-          </div>
+            <div role="status">
+                <img class="loadingGif center" src="../assets/images/loading.gif">
+            </div>
         </template>
     </Suspense>
     
