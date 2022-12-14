@@ -2,15 +2,20 @@
 import { getAllPokemon, getAllType } from '@/utils/pokebuildApi';
 import { getAllCollection, addPokemonToCollection } from '@/utils/backendRequests';
 import anime from 'animejs';
+import PokemonsList from "@/components/ListCollection.vue";
+import ListCollection from "@/components/ListCollection.vue";
 
 export default {
+  components: {
+    ListCollection
+  },
   data: () => ({
     loading: true,
     generations: [1,2,3,4,5,6,7,8],
     types: [],
     allPokemons: [],
     myPokemons: [],
-    order: 'pokedex',
+    order: 'date',
     cardAnimatedFlipped: [false,false],
     pseudo : localStorage.pseudo
   }),
@@ -22,13 +27,11 @@ export default {
     this.types = await getAllType();
     this.allPokemons = await getAllPokemon();
     this.myPokemons = await getAllCollection(localStorage.pseudo, localStorage.token);
-
     this.loading = false;
   },
   methods: {
     setOrder(newOrder){
-      console.log(newOrder)
-        this.order = newOrder;
+      this.order = newOrder;
     },
     startAnimation(idPokemon){
         var card = document.querySelector(".card");
@@ -106,9 +109,10 @@ export default {
         else{return this.checkNextEvolution(idPokemon)}
     },
     async catchPokemon(idPokemon){
-        await addPokemonToCollection(localStorage.pseudo,idPokemon, localStorage.token);
-        this.myPokemons = await getAllCollection(localStorage.pseudo, localStorage.token);
-        this.$forceUpdate();
+        const res = await addPokemonToCollection(localStorage.pseudo,idPokemon, localStorage.token);
+        if(res != null){
+          this.myPokemons.push(res)
+        }
     }, scaleUp(event){
         anime({
             targets: event.target,
@@ -117,6 +121,12 @@ export default {
             easing: 'easeInOutSine',
             duration: 500,
         });
+    },orderPokeBy() {
+      if(this.order === 'date'){
+        return this.myPokemons
+      }else if(this.order === 'pokedex') {
+        return [...this.myPokemons].sort((a, b) => a.pokemonId - b.pokemonId)
+      }
     },
   }
 }
@@ -158,18 +168,7 @@ export default {
                 </div>
             </div>
         </div>
-        <div>
-            <div v-if="this.order==='date'"  id="pokemonsByDate" class="row align-items-center">
-                <div v-for="poke in myPokemons" class="col" v-bind:id="poke.id">
-                     <img class="center" :src="allPokemons[poke.pokemonId-1].sprite">
-                </div>
-            </div>
-            <div v-else-if="this.order==='pokedex'"  id="pokemonsByPokedex" class="row align-items-center">
-                <div v-for="poke in [...myPokemons].sort((a,b)=> a.pokemonId > b.pokemonId)" class="col" v-bind:id="poke.id" @click="scaleUp($event)">
-                     <img class="center" :src="allPokemons[poke.pokemonId-1].sprite">
-                </div>
-            </div>
-        </div>
+        <ListCollection :my-pokemons="orderPokeBy()" :all-pokemons="allPokemons"/>
     </div>
 </template>
 
