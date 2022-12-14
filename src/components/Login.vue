@@ -48,6 +48,7 @@
                             <div class="form-group col-md-5">
                                 <label class="text-center" for="pseudo">PSEUDO</label>
                                 <input type="text" class="form-control w-100" id="pseudoInscr" placeholder="Entrez votre pseudo">
+
                             </div>
                             </div>
                             
