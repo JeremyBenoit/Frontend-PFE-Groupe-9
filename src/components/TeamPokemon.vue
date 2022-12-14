@@ -1,14 +1,17 @@
 <script>
-export default {props:['teamId']};
-</script>
-
-<script setup >
 import OneTeamCard from "@/components/OneTeamCard.vue";
 
-const name = "test";
-const comments = ['test','test'];
+export default {
+  components: {
+    OneTeamCard
+  },
+  props:['teamId'],
+  data: () => ({
+    name: "test",
+    comments: ['test','test']
+  })
+};
 </script>
-
 
 <template>
   <h3>Team {{name}}</h3>

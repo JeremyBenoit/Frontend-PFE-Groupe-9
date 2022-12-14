@@ -85,6 +85,14 @@ export default {
 </template>
 
 <style scoped>
+.center{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.loadingGif{
+  width: 20%;
+}
 .imagePokemon {
   width: 100%;
   height: auto;
