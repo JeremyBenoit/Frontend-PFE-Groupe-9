@@ -9,7 +9,10 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <RouterLink to="/buildTeam" class="nav-link">Team Builder</RouterLink>
+                        <RouterLink to="/build-team" class="nav-link">Team Builder</RouterLink>
+                    </li>
+                    <li class="nav-item">
+                        <RouterLink to="/collection" class="nav-link">Collection</RouterLink>
                     </li>
                   <li class="nav-item">
                         <RouterLink to="/team/1" class="nav-link">Team</RouterLink>

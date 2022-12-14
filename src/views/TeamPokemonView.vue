@@ -11,7 +11,7 @@ import TeamPokemon from '../components/TeamPokemon.vue'
     </template>
     <template #fallback>
       <div class="spinner-border text-primary" role="status">
-        <span class="visually-hidden" id="spinner">Loading...</span>
+        <img class="loadingGif" src="../assets/images/loading.gif">
       </div>
     </template>
   </Suspense>
