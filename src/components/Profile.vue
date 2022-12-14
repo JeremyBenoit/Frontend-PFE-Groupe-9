@@ -1,6 +1,6 @@
 <script>
 import { getAllLikedByUserId, getAllByAuthorId } from "@/utils/backendRequests"
-import {getAllPokemons} from "@/utils/pokebuildApi";
+import {getAllPokemon} from "@/utils/pokebuildApi";
 
 export default {
   data() {
@@ -21,7 +21,7 @@ export default {
       this.$router.push({name: 'login'});
       return;
     }
-    this.allPokemons = await getAllPokemons()
+    this.allPokemons = await getAllPokemon()
     this.teams = res
     this.loading = false
   },
@@ -53,7 +53,7 @@ export default {
 
 <template>
   <div v-if="loading">
-    <h1 class="text-center">LOADING...</h1>
+    <img class="loadingGif center" src="../assets/images/loading.gif">
   </div>
   <div v-else>
     <div class="container buttonsFilter">

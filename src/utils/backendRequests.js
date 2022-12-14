@@ -1,5 +1,5 @@
-import axios from "axios"
-const baseURL = "http://localhost:9000"
+import axios from "axios";
+const baseURL = "http://localhost:9000";
 
 const login = async (pseudo, password) => {
     try {
@@ -51,9 +51,41 @@ const getAllByAuthorId = async  (token, pseudo) => {
     }
 }
 
+const getAllCollection = async (id, token) => {
+    try {
+        let res = await axios.get(baseURL.concat(`/collections/user/${id}`),{
+            headers: {
+                'Authorization': token
+            }
+        })
+        return res.data
+    } catch (e){
+        return null
+    }
+}
+
+const addPokemonToCollection = async (userId, pokemonId, token) => {
+    try {
+        let res = await axios.post(baseURL.concat(`/collections/`),
+        {
+            pokemonId: pokemonId,
+            userId: userId
+        },{
+                headers: {
+                    'Authorization': token
+                }
+            })
+        return res.data
+    } catch (e){
+        return null
+    }
+}
+
 export {
     login,
     register,
     getAllLikedByUserId,
-    getAllByAuthorId
+    getAllByAuthorId,
+    getAllCollection,
+    addPokemonToCollection
 }
