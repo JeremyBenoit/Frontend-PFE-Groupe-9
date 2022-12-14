@@ -21,7 +21,6 @@ export default {
     this.types = await getAllType();
     this.allPokemons = await getAllPokemon();
     this.myPokemons = await getAllCollection(localStorage.pseudo);
-    console.log(this.myPokemons);
 
     this.loading = false;
   },
@@ -41,6 +40,7 @@ export default {
             dateElement.hidden = true;
             pokedexElement.hidden = false;
         }
+        this.$forceUpdate();
     },
     startAnimation(idPokemon){
         var card = document.querySelector(".card");
@@ -57,7 +57,7 @@ export default {
             scale: [{value: 1}, {value: 1.4}, {value: 1, delay: 250}],
             rotateY: {value: '+=180', delay: 200},
             easing: 'easeInOutSine',
-            duration: 3000,
+            duration: 2000,
             complete: () => {
                 this.cardAnimatedFlipped[0] = false;
                 this.cardAnimatedFlipped[1] = !this.cardAnimatedFlipped[1];
@@ -72,49 +72,64 @@ export default {
             this.cardAnimatedFlipped[0] = true;
         }
         else{
-            this.cardAnimatedFlipped[0] = true;
+                this.cardAnimatedFlipped[0] = true;
 
-        //Get a Random Pokemon
-        var idPokemon = Math.floor(Math.random() * max) + 1;
-        //go to the first preEvolution
-        while(this.allPokemons[idPokemon-1].apiPreEvolution.pokedexIdd > 0) {
-            for(let p in this.myPokemons){
-                if(p.pokemonId == this.allPokemons[idPokemon-1].apiPreEvolution.pokedexIdd) return;
+            //Get a Random Pokemon
+            var idPokemon = Math.floor(Math.random() * max) + 1;
+            //go to the first preEvolution
+            while(this.allPokemons[idPokemon-1].apiPreEvolution.pokedexIdd > 0) {
+                for(let p in this.myPokemons){
+                    if(p.pokemonId == this.allPokemons[idPokemon-1].apiPreEvolution.pokedexIdd) return;
+                }
+                idPokemon = this.allPokemons[idPokemon-1].apiPreEvolution.pokedexIdd;
             }
-            idPokemon = this.allPokemons[idPokemon-1].apiPreEvolution.pokedexIdd;
-        }
-        //If you dont have it, earned it.
-        if(!this.hasPokemon(idPokemon)){
-            this.catchPokemon(idPokemon);
-        } else {
-        //check next evolution
-        idPokemon = this.checkNextEvolution(idPokemon);
-        }
-        //start the animation
-        this.startAnimation(idPokemon);
+            //If you dont have it, earned it.
+            if(!this.hasPokemon(idPokemon)){
+                this.catchPokemon(idPokemon);
+            } else {
+                //check next evolution
+                idPokemon = this.checkNextEvolution(idPokemon);
+            }
+            //start the animation
+            this.startAnimation(idPokemon);
         }
     },
     hasPokemon(idPokemon) {
         for(let p in this.myPokemons){
-            if(p.pokemonId == idPokemon) return true;
+            if(this.myPokemons[p].pokemonId == idPokemon){
+                return true;
+            }
         }
         return false;
     },
     checkNextEvolution(idPok){
         let idPokemon = idPok;
         //if dont have next evo, retry, if it does, go to next evo
-        if(!(this.allPokemons[idPokemon-1].apiEvolutions.pokedexId > 0)) this.getNewPokemon();
-        else{ idPokemon = this.allPokemons[idPokemon-1].apiEvolutions.pokedexId}
+        if(this.allPokemons[idPokemon-1].apiEvolutions.length == 0){
+            this.getNewPokemon();
+            return;
+        }
+        else{ idPokemon = this.allPokemons[idPokemon-1].apiEvolutions[0].pokedexId}
         //if we have evo catch, other whise check next evo
         if(!this.hasPokemon(idPokemon)){
             this.catchPokemon(idPokemon);
-            return pokemonId;
+            return idPokemon;
         }
         else{return this.checkNextEvolution(idPokemon)}
     },
     async catchPokemon(idPokemon){
-        console.log(await addPokemonToCollection(localStorage.pseudo,idPokemon));
-    }
+        await addPokemonToCollection(localStorage.pseudo,idPokemon);
+        this.myPokemons = await getAllCollection(localStorage.pseudo);
+        this.$forceUpdate();
+    }, scaleUp(event){
+        anime({
+            targets: event.target,
+            translateX: [Math.floor(Math.random()*10),-Math.floor(Math.random()*10),Math.floor(Math.random()*10),-Math.floor(Math.random()*10),0],
+            translateY: [Math.floor(Math.random()*10),-Math.floor(Math.random()*10),Math.floor(Math.random()*10),-Math.floor(Math.random()*10),0],
+            easing: 'easeInOutSine',
+            duration: 500,
+        });
+    },
   }
 }
 
@@ -138,7 +153,7 @@ export default {
             
         </div>
         <div class="container filterButtons">
-            <div class="row">
+            <div class="row">   
                 <div class="col">
                     <p id="pokedexFrom">Pokedex de {{myPokemons[0].userId}} : {{myPokemons.length}}/{{allPokemons.length}}</p>
                 </div>
@@ -162,7 +177,7 @@ export default {
                 </div>
             </div>
             <div id="pokemonsByPokedex" class="row align-items-center">
-                <div v-for="poke in [...myPokemons].sort((a,b)=> a.pokemonId > b.pokemonId)" class="col" v-bind:id="poke.id">
+                <div v-for="poke in [...myPokemons].sort((a,b)=> a.pokemonId > b.pokemonId)" class="col" v-bind:id="poke.id" @click="scaleUp($event)">
                      <img class="center" :src="allPokemons[poke.pokemonId-1].sprite">
                 </div>
             </div>
