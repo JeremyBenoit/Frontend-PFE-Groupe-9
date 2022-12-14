@@ -1,0 +1,14 @@
+@baseUrl = http://localhost:8080/users
+@pokeBuildApi = https://pokebuildapi.fr/api/v1
+
+###TEST checkToken expiré
+POST {{baseUrl}}/me
+Content-Type: application/json
+
+{
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkYXRlIjoxNjE2ODY3Mjg5LCJpc3MiOiJhdXRoMCIsImxpZmVUaW1lIjo4NjQwMCwidXNlciI6MH0.c0KhWvsLiWeoUqdVhU3NuIL-0edgS8nMVzXqX_Ec89Q"
+}
+
+
+###TEST get all pokemon from pokebuild
+GET {{pokeBuildApi}}/pokemon
