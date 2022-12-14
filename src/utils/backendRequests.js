@@ -83,20 +83,13 @@ async function addPokemonToCollection(userId, pokemonId, token) {
 
 async function getOneTeamById(id) {
     try {
-        const response = await axios.get(baseURL.concat('/teams/one/'+id))
+        const response = await axios.get(baseURL.concat(`/teams/${id}`))
         return response.data;
     } catch (err) {
         console.error("error: ", err);
     }
 }
-async function getOneTeamByName(name) {
-    try {
-        const response = await axios.get(baseURL.concat('/teams/'+name))
-        return response.data;
-    } catch (err) {
-        console.error("error: ", err);
-    }
-}
+
 async function getAllTeam() {
     try {
         const response = await axios.get(baseURL.concat('/teams/'))
@@ -115,5 +108,4 @@ export {
     addPokemonToCollection,
     getOneTeamById,
     getAllTeam,
-    getOneTeamByName
 }

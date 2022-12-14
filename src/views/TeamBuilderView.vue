@@ -21,9 +21,12 @@ import TeamBuilder from '../components/TeamBuilder.vue'
 </template>
 
 <style scoped>
-.spinner-border {
-    margin-left: 45%;
-    margin-top: 20px;
-    margin-bottom: 20px;
+.center{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.loadingGif{
+  width: 20%;
 }
 </style>

@@ -38,7 +38,7 @@ const router = createRouter({
       component : () => import('../views/CollectionView.vue')
     },
     {
-      path: '/team/:id',
+      path: '/teams/:id',
       name: 'team',
       component : () => import('../views/TeamPokemonView.vue')
     }
