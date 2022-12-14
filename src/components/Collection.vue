@@ -142,32 +142,12 @@ export default {
                 <div class="col">
                     <p id="pokedexFrom">Pokedex de {{myPokemons[0].userId}} : {{myPokemons.length}}/{{allPokemons.length}}</p>
                 </div>
-                <div class="col">  
+                <div class="col ">  
                     <div class="dropdown">
                         <button class="btn btn-primary dropdown-toggle center" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            Types
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li v-for="t in types"><a class="dropdown-item" href="#">{{t.name}} <img class="typeImage" :src=t.image></a></li>
-                        </ul>
-                    </div> 
-                </div>
-                <div class="col ">  
-                    <div class="dropdown">
-                        <button class="btn btn-primary dropdown-toggle center" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                            Generation
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                            <li v-for="gen in generations"><a class="dropdown-item" href="#">Gen {{gen}}</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col ">  
-                    <div class="dropdown">
-                        <button class="btn btn-primary dropdown-toggle center" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
                             Trier
                         </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                             <li><a class="dropdown-item" @click="setOrder('date')">Date d'aquisition</a></li>
                             <li><a class="dropdown-item" @click="setOrder('pokedex')">Ordre Pokedex</a></li>
                         </ul>
@@ -191,44 +171,38 @@ export default {
 </template>
 
 <style>
+#newPokemonName{
+    font-size: 30%;
+    text-align: center;
+}
+#pokedexFrom{
+    font-size: 120%;
+}
 .typeImage{
     width: 15%;
 }
-
 .pokeballPic{
     width: 10%;
 }
-
 .center{
     display: block;
     margin-left: auto;
     margin-right: auto;
 }
-
 .loadingGif{
     width: 20%;
 }
-
-#newPokemonName{
-    font-size: 30%;
-    text-align: center;
-}
-
 .card-container
 {
     font-family: 'Open Sans', sans serif;
     font-size: 120px;
     font-weight: bold;
-
     width: 400px;
     height: 300px;
     margin: 80px auto;
-
     border-radius: 10px;
-
     perspective: 1400px;
 }
-
 .card
 {
     position: relative;
@@ -237,7 +211,6 @@ export default {
     width: 100%;
     transform-style: preserve-3d;
 }
-
 .front,
 .back
 {
@@ -249,7 +222,6 @@ export default {
     align-items: center;
     backface-visibility: hidden;
 }
-
 .front
 {
     color: #fff;
@@ -272,9 +244,5 @@ export default {
     transform: rotateY(180deg);
     color: #d9d9d9; 
     background: rgb(86, 86, 86);
-}
-
-#pokedexFrom{
-    font-size: 120%;
 }
 </style>
