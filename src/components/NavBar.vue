@@ -9,15 +9,17 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <RouterLink to="/buildTeam" class="nav-link">Team Builder</RouterLink>
+                        <RouterLink to="/build-team" class="nav-link">Team Builder</RouterLink>
                     </li>
                     <li class="nav-item">
                         <RouterLink to="/collection" class="nav-link">Collection</RouterLink>
                     </li>
+                  <li class="nav-item">
+                        <RouterLink to="/team/1" class="nav-link">Team</RouterLink>
+                    </li>
                 </ul>
-            <RouterLink to="/login" class="nav-link"><button type="button" class="btn btn-primary">Login</button></RouterLink>
-
-            <RouterLink to="/profile" class="nav-link"><button type="button" class="btn btn-primary">Profile</button></RouterLink>
+            <RouterLink to="/login" class="nav-link"><button type="button" class="btn btn-primary">Login</button></RouterLink>  
+            
             </div>
         </div>
     </nav>

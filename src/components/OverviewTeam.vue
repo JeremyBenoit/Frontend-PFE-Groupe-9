@@ -1,9 +1,7 @@
 <script setup>
-import tempTeamData from '../assets/tempTeamData.json'
-
 import heart from '../assets/heart.png';
 
-let images = []
+let images = ["poke1", "poke2", "poke3", "poke4", "poke5", "poke6"]
 </script>
 
 <template>
@@ -13,7 +11,7 @@ let images = []
             <div class="container">
                 <div class="row">
                     <div v-for="image in images" class="col">
-                        <img :src="image" class="imagePokemon">
+                        {{ image }}
                     </div>
                 </div>
             </div>

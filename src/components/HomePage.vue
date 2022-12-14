@@ -22,7 +22,6 @@ import OverViewTeam from './OverviewTeam.vue';
 .HomePage {
   margin-bottom: 100px;
 }
-
 .buttonsFilter{
   margin-top: 10px;
   margin-bottom: 10px;
