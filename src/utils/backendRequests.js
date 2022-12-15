@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseURL = "http://pokemon-team-maker-api-dev.eu-west-3.elasticbeanstalk.com";
+const baseURL = import.meta.env.VITE_API_BACKEND_URL;
 
 async function login (pseudo, password) {
     try {   
