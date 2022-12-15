@@ -92,7 +92,7 @@ async function getOneTeamById(id) {
 
 async function getAllTeam() {
     try {
-        const response = await axios.get(baseURL.concat('/teams/'))
+        const response = await axios.get(baseURL.concat('/teams'))
         return response.data;
     } catch (err) {
         console.error("error: ", err);
@@ -100,7 +100,7 @@ async function getAllTeam() {
 }
 async function createLike(userId,teamId){
     try {
-        const response = await axios.post(baseURL.concat('/likes/'),{
+        const response = await axios.post(baseURL.concat('/likes'),{
             userId: userId,
             teamId: teamId
         },{
@@ -123,7 +123,7 @@ async function getAllComment(id) {
 }
 async function createComment(userId,teamId,content){
     try {
-        const response = await axios.post(baseURL.concat('/comments/'),{
+        const response = await axios.post(baseURL.concat('/comments'),{
             user: userId,
             teamId: teamId,
             content: content
