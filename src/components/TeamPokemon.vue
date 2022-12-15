@@ -47,16 +47,16 @@ export default {
       <h3>Force et faiblesse</h3>
       <StrenghtAndWeakness :wOrf="wOrf"/>
     </div>
-    <div class="comments">
+    <div class="comments d-flex-inline">
       <h3>Commentaires</h3>
       <div v-for="(comment) in comments" class="row">
         <div class="col">
           <p>{{comment.authorId}} : {{comment.content}}</p>
         </div>
       </div>
-      <h5>Faites votre commentaire</h5>
-      <input id="comment">
-      <button @click="addComment()" >Enregistrer</button>
+      <h5>Donnez votre avis</h5>
+      <textarea id="comment" class="form-control mx-5" placeholder="Commentez..."/>
+      <button class="btn btn-primary m-1" @click="addComment()" >Enregistrer</button>
     </div>
   </div>
 </template>

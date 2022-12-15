@@ -92,7 +92,7 @@ async function getOneTeamById(id) {
 
 async function getAllTeam() {
     try {
-        const response = await axios.get(baseURL.concat('/teams'))
+        const response = await axios.get(baseURL.concat('/teams/'))
         return response.data;
     } catch (err) {
         console.error("error: ", err);

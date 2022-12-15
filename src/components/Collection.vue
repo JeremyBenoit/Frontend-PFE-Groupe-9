@@ -114,7 +114,7 @@ export default {
         }
     },orderPokeBy() {
       if(this.order === 'date'){
-        return this.myPokemons
+        return [...this.myPokemons].sort((a, b) => b.id - a.id)
       }else if(this.order === 'pokedex') {
         return [...this.myPokemons].sort((a, b) => a.pokemonId - b.pokemonId)
       }

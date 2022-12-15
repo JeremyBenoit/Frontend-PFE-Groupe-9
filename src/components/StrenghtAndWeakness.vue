@@ -17,11 +17,34 @@ export default {
 </script>
 
 <style scoped>
-#balanced{background: darkgray;}
-#slightly-resistant{background: greenyellow;}
-#resistant{background: green;}
-#slightly-vulnerable{background: orange;}
-#vulnerable{background: red;}
+.f{
+  border-radius: 10px;
+}
+
+.f p{
+  padding: 1px;
+}
+#balanced{
+  background: darkgray;
+}
+
+#slightly-resistant {
+  background: greenyellow;
+}
+
+#resistant {
+  color: white;
+  background: green;
+}
+
+#slightly-vulnerable {
+  background: orange;
+}
+
+#vulnerable {
+  color: white;
+  background: red;
+}
 .wOrf{
   margin: 10px;
 }

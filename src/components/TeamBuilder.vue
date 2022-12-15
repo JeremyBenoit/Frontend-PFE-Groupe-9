@@ -1,9 +1,11 @@
 <script>
 import { getAllPokemon, getDefensiveCoverage, getPokemonsFromGen, getPokemonsFromType, getAllType } from '../utils/pokebuildApi';
 import { createTeam } from '../utils/backendRequests';
+import StrenghtAndWeakness from "@/components/StrenghtAndWeakness.vue";
 
 export default {
   components: {
+    StrenghtAndWeakness
   },
   data: () => ({
     loading: [true,"Initialisation..."],
@@ -13,38 +15,32 @@ export default {
     filterAxises: ["gen", "types"],
     pokemonTeamPointer: -1,
     pokemonTeam: [ -1,-1,-1,-1,-1,-1 ],
+    strengthAndWeakness: []
   }),
   async created() {
     this.loading[1] = "Chargement des types en cours...";
     this.types = await getAllType();
     this.loading[1] = "Chargement des Pokemons en cours...";
     this.allPokemons = await getAllPokemon();
+    this.strengthAndWeakness = await getDefensiveCoverage(this.pokemonTeam);
     this.loading[0] = false;
   },
   methods: {
-    addPokemon(idPokemon) {
-        if(this.pokemonTeam[this.pokemonTeam.length-1]!=-1){
-            return;
-        }
-        this.pokemonTeamPointer++;
-        this.pokemonTeam[this.pokemonTeamPointer] = idPokemon;
+    async addPokemon(idPokemon) {
+      if (this.pokemonTeam[this.pokemonTeam.length - 1] != -1) {
+        return;
+      }
+      this.pokemonTeamPointer++;
+      this.pokemonTeam[this.pokemonTeamPointer] = idPokemon;
+      this.strengthAndWeakness = await getDefensiveCoverage(this.pokemonTeam);
     },
-    removePokemon(indexSlot) {    
-        for (let index = indexSlot; index < this.pokemonTeamPointer; index++) {
-            this.pokemonTeam[index] = this.pokemonTeam[index+1];
-        }
-        this.pokemonTeam[this.pokemonTeamPointer] = -1;
-        this.pokemonTeamPointer--;
-    },
-    async displayDefensiveCoverage() {
-        let defensifeCoverage = await getDefensiveCoverage(this.pokemonTeam);
-        let defensifeCoverageHtml = document.getElementById("defensiveCoverage");
-
-        let tempHtml = ``;
-        defensifeCoverage.forEach(defenseType => {
-            tempHtml += `<div class="${defenseType.result}">${defenseType.name} : ${defenseType.message}</div>`
-        });
-        defensifeCoverageHtml.innerHTML = tempHtml;
+    async removePokemon(indexSlot) {
+      for (let index = indexSlot; index < this.pokemonTeamPointer; index++) {
+        this.pokemonTeam[index] = this.pokemonTeam[index + 1];
+      }
+      this.pokemonTeam[this.pokemonTeamPointer] = -1;
+      this.pokemonTeamPointer--;
+      this.strengthAndWeakness = await getDefensiveCoverage(this.pokemonTeam);
     },
     async filterPokemon(filterAxis, filter){
         let allPokemonHtml = document.getElementById("allPokemon");
@@ -114,6 +110,9 @@ export default {
                 </div>
             </div>
         </div>
+      <div id="defensiveCoverage" class="strengthWeakness">
+        <StrenghtAndWeakness :w-orf="strengthAndWeakness"/>
+      </div>
         <div class="container filterButtons">
             <div class="row">
                 <div class="col">
@@ -143,16 +142,15 @@ export default {
                         </ul>
                     </div>
                 </div>
-                <div class="strengthWeakness col">
-                    <button class="btn btn-primary" v-on:click="displayDefensiveCoverage()"> Vérifier forces et faiblesses </button>
-                </div>
+                <!--<div class="strengthWeakness col">
+                    <button class="btn btn-primary" @click="setShowStrengthAndWeakness"> Vérifier forces et faiblesses </button>
+                </div>-->
                 <div class="col row" v-if="pokemonTeam[pokemonTeam.length-1]!=-1">
-                    <form id="createTeamForm" v-on:submit.prevent="createTeamHandler">
-                        <input type="text" placeholder="Nom d'équipe" name="teamName" required class="col">
+                    <form id="createTeamForm" class="row" v-on:submit.prevent="createTeamHandler">
+                        <input type="text" placeholder="Nom d'équipe" name="teamName" required class="col form-control mx-2">
                         <button id="createTeamButton" type="submit" class="btn btn-primary col">Créer l'équipe</button>
                     </form>
                 </div>
-                <div id="defensiveCoverage"></div>
             </div>
         </div>
         <div id="allPokemon">
@@ -167,6 +165,11 @@ export default {
 </template>
 
 <style>
+.strengthWeakness{
+  margin-top: 5px;
+  margin-bottom: 5px;
+  text-align: center;
+}
 .teamPic {
     width: 50%;
     height: auto;
@@ -178,8 +181,7 @@ export default {
 }
 
 .filterButtons{
-    margin-top: 5px;
-    margin-bottom: 5px;
+    padding: 10px 5px 10px 5px;
 }
 
 .loadingGif, .loadingMessage{
