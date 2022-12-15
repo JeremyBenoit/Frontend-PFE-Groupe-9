@@ -1,22 +1,28 @@
 <script>
-export default {props:['teamId']};
+import {getOneTeamById} from "@/utils/teamsAPI";
+import {getDefensiveCoverage} from "@/utils/pokebuildApi";
+export default {
+  props:['teamId'],
+};
 </script>
 
-<script setup >
+<script setup>
 import OneTeamCard from "@/components/OneTeamCard.vue";
 import {getDefensiveCoverage} from "@/utils/pokebuildApi";
 import StrenghtAndWeakness from "@/components/StrenghtAndWeakness.vue";
+import {getOneTeamById} from "@/utils/teamsAPI";
 
-const name = "test";
+const team = await getOneTeamById(document.URL.substring(27))
 const comments = ['test','test'];
-const pokemons = [1,2,3,4,5,6];
+const name = await team.name;
+const pokemons = await team.pokemons;
 const wOrf = await getDefensiveCoverage(pokemons)
 </script>
 
 
 <template>
   <h3>Team {{name}}</h3>
-  <OneTeamCard :teamId="teamId"/>
+  <OneTeamCard :team="pokemons"/>
   <div class="strengthWeakness">
     <h3>Force et faiblesse</h3>
     <StrenghtAndWeakness :wOrf="wOrf"/>

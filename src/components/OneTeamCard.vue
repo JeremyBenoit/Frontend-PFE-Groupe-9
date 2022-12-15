@@ -4,19 +4,12 @@ import heart from '../assets/heart.png';
 import OnePokemonCard from "@/components/OnePokemonCard.vue";
 import {getOneTeamById} from "@/utils/teamsAPI";
 
-let team;
-const t = (teamId) => {
-  team = getOneTeamById(teamId)
-}
 const allPokemon = await getAllPokemon()
-
-const pokemons = [1,2,3,4,5,6];
 let likes = 3;
 </script>
 <template>
-  {{t(teamId)}}
   <div class="row pokemonTeam">
-    <div v-for="(poke) in pokemons" class="col">
+    <div v-for="(poke) in team" class="col">
       <div>
         <OnePokemonCard :pokemon="allPokemon.at(poke-1)" />
       </div>
@@ -29,7 +22,7 @@ let likes = 3;
 
 <script>
 export default {
-  props:['teamId']
+  props:['team']
 }
 </script>
 
