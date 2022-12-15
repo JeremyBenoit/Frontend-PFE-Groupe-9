@@ -39,9 +39,7 @@ export default {
       <p id="likes">{{likes.length}} <img src="../assets/heart.png" class="heart" alt="heart"></p>
     </div>
     <div class="nrbHearts" v-else>
-      <button @click="addLike()">
-        <p id="likes">{{likes.length}} <img src="../assets/heartEmpty.png" class="heart" alt="heart"></p>
-      </button>
+      <p @click="addLike()" id="likes">{{likes.length}} <img src="../assets/heartEmpty.png" class="heart" alt="heart"></p>
     </div>
   </div>
 </template>
