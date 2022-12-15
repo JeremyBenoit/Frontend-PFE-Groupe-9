@@ -6,7 +6,9 @@ export default {
   components:{OnePokemonCard},
   props:['team','likes','teamId'],
   data: () => {
-    return { liked:false}
+    return {
+      liked:false
+    }
   },
   created() {
     for (let like in this.likes) {
@@ -18,7 +20,7 @@ export default {
   methods:{
     async addLike(){
       const res = await createLike(localStorage.pseudo,this.teamId);
-      if (res.status === 200){
+      if (res.status != null){
         this.likes.push(res);
         this.liked = true;
       }

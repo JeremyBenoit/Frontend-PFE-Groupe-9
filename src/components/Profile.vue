@@ -1,10 +1,10 @@
 <script>
 import { getAllLikedByUserId, getAllByAuthorId } from "@/utils/backendRequests"
 import { getAllPokemon } from "@/utils/pokebuildApi";
-import TeamCard from "@/components/TeamCard.vue";
+import TeamRow from "@/components/TeamRow.vue";
 
 export default {
-  components: {TeamCard},
+  components: {TeamCard: TeamRow},
   data() {
     return {
       teams: [],

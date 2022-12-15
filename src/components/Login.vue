@@ -29,6 +29,11 @@ export default {
       }
       localStorage.token = res;
       localStorage.pseudo = form.pseudo.value;
+      if(!form.rememberMe.checked){
+        window.addEventListener('beforeunload', () => {
+          localStorage.clear()
+        })
+      }
       this.$router.push({name: 'profile'});
     },
     async registerFormHandler(e) {

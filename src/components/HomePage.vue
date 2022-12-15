@@ -1,11 +1,11 @@
 <script>
 import {getAllPokemon} from "@/utils/pokebuildApi";
 import {getAllTeam} from "@/utils/backendRequests";
-import TeamCard from "@/components/TeamCard.vue";
+import TeamRow from "@/components/TeamRow.vue";
 
 export default {
   components: {
-    TeamCard
+    TeamCard: TeamRow
   },
   data: () => ({
     teams: [],
