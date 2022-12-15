@@ -1,7 +1,7 @@
 <template>
   <div class="row OnePoke">
     <div>
-      <p>{{pokemon.name}}  pokedex n°{{pokemon.pokedexId}}</p>
+      <p>{{pokemon.name}}  n°{{pokemon.pokedexId}}</p>
     </div>
     <img :src="pokemon.sprite" @mousedown="display=!display"/>
     <div v-for="(type) in pokemon.apiTypes" class="col">
@@ -27,5 +27,8 @@ export default {
 .type{
   width: 40px;
   height: auto;
+}
+.OnePoke{
+  background: aquamarine;
 }
 </style>

@@ -28,8 +28,11 @@ export default {
                     <li v-if="isConnected" class="nav-item">
                         <RouterLink to="/collection" class="nav-link">Collection</RouterLink>
                     </li>
-                  <li class="nav-item">
+                    <li class="nav-item">
                         <RouterLink to="/teams/1" class="nav-link">Team</RouterLink>
+                    </li>
+                    <li class="nav-item">
+                        <RouterLink to="/tuto" class="nav-link">Tutoriel</RouterLink>
                     </li>
                 </ul>
             <RouterLink v-if="!isConnected" to="/login" class="nav-link">

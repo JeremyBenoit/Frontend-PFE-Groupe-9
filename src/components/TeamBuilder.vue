@@ -46,7 +46,6 @@ export default {
         defensifeCoverage.forEach(defenseType => {
             tempHtml += `<div class="${defenseType.result}">${defenseType.name} : ${defenseType.message}</div>`
         });
-
         defensifeCoverageHtml.innerHTML = tempHtml;
     },
     async filterPokemon(filterAxis, filter){
@@ -196,5 +195,8 @@ export default {
 
 .typeImage{
     width: 15%;
+}
+#allPokemon{
+  background: aquamarine;
 }
 </style>

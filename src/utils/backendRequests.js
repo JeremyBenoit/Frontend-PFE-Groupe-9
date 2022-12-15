@@ -98,6 +98,45 @@ async function getAllTeam() {
         console.error("error: ", err);
     }
 }
+async function createLike(userId,teamId){
+    try {
+        const response = await axios.post(baseURL.concat('/likes/'),{
+            userId: userId,
+            teamId: teamId
+        },{
+            headers: {
+                'Authorization': localStorage.token
+            }
+        })
+        return response.data;
+    } catch (err) {
+        console.error("error: ", err);
+    }
+}
+async function getAllComment(id) {
+    try {
+        const response = await axios.get(baseURL.concat(`/comments/teams/${id}`))
+        return response.data;
+    } catch (err) {
+        console.error("error: ", err);
+    }
+}
+async function createComment(userId,teamId,content){
+    try {
+        const response = await axios.post(baseURL.concat('/comments/'),{
+            user: userId,
+            teamId: teamId,
+            content: content
+        },{
+            headers: {
+                'Authorization': localStorage.token
+            }
+        })
+        return response.data;
+    } catch (err) {
+        console.error("error: ", err);
+    }
+}
 
 async function createTeam(name, creatorId, pokemons, token) {
     try {
@@ -126,5 +165,8 @@ export {
     addPokemonToCollection,
     getOneTeamById,
     getAllTeam,
-    createTeam
+    createTeam,
+    createLike,
+    getAllComment,
+    createComment
 }
