@@ -2,7 +2,7 @@ import axios from "axios";
 const baseURL = "http://pokemon-team-maker-api-dev.eu-west-3.elasticbeanstalk.com";
 
 async function login (pseudo, password) {
-    try {
+    try {   
         const res = await axios.post(baseURL.concat("/connect"), {
             pseudo: pseudo,
             password: password
@@ -66,7 +66,7 @@ async function getAllCollection(id, token) {
 
 async function addPokemonToCollection(userId, pokemonId, token) {
     try {
-        let res = await axios.post(baseURL.concat(`/collections/`),
+        let res = await axios.post(baseURL.concat(`/collections`),
         {
             pokemonId: pokemonId,
             userId: userId
@@ -92,10 +92,67 @@ async function getOneTeamById(id) {
 
 async function getAllTeam() {
     try {
-        const response = await axios.get(baseURL.concat('/teams/'))
+        const response = await axios.get(baseURL.concat('/teams'))
         return response.data;
     } catch (err) {
         console.error("error: ", err);
+    }
+}
+async function createLike(userId,teamId){
+    try {
+        const response = await axios.post(baseURL.concat('/likes'),{
+            userId: userId,
+            teamId: teamId
+        },{
+            headers: {
+                'Authorization': localStorage.token
+            }
+        })
+        return response.data;
+    } catch (err) {
+        console.error("error: ", err);
+    }
+}
+async function getAllComment(id) {
+    try {
+        const response = await axios.get(baseURL.concat(`/comments/teams/${id}`))
+        return response.data;
+    } catch (err) {
+        console.error("error: ", err);
+    }
+}
+async function createComment(userId,teamId,content){
+    try {
+        const response = await axios.post(baseURL.concat('/comments'),{
+            user: userId,
+            teamId: teamId,
+            content: content
+        },{
+            headers: {
+                'Authorization': localStorage.token
+            }
+        })
+        return response.data;
+    } catch (err) {
+        console.error("error: ", err);
+    }
+}
+
+async function createTeam(name, creatorId, pokemons, token) {
+    try {
+        let res = await axios.post(baseURL.concat(`/teams`),
+        {
+            name: name,
+            creatorId: creatorId,
+            pokemons: pokemons,
+        },{
+                headers: {
+                    'Authorization': token
+                }
+            })
+        return res.data
+    } catch (e){
+        return null
     }
 }
 
@@ -108,4 +165,8 @@ export {
     addPokemonToCollection,
     getOneTeamById,
     getAllTeam,
+    createTeam,
+    createLike,
+    getAllComment,
+    createComment
 }

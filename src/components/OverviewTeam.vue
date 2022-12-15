@@ -1,4 +1,4 @@
-<script setup>
+<!--<script setup>
 import heart from '../assets/heart.png';
 
 let images = ["poke1", "poke2", "poke3", "poke4", "poke5", "poke6"]

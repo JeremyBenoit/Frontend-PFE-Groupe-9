@@ -2,7 +2,6 @@
 import { getAllPokemon, getAllType } from '@/utils/pokebuildApi';
 import { getAllCollection, addPokemonToCollection } from '@/utils/backendRequests';
 import anime from 'animejs';
-import PokemonsList from "@/components/ListCollection.vue";
 import ListCollection from "@/components/ListCollection.vue";
 
 export default {
@@ -10,9 +9,8 @@ export default {
     ListCollection
   },
   data: () => ({
-    loading: true,
+    loading: [true,"Initialisation..."],
     generations: [1,2,3,4,5,6,7,8],
-    types: [],
     allPokemons: [],
     myPokemons: [],
     order: 'date',
@@ -23,11 +21,12 @@ export default {
     if(localStorage.token == null || localStorage.pseudo == null){
       this.$router.push({ name: 'login' });
     }
-
-    this.types = await getAllType();
-    this.allPokemons = await getAllPokemon();
+    
+    this.loading[1] = "Chargement de la collection en cours...";
     this.myPokemons = await getAllCollection(localStorage.pseudo, localStorage.token);
-    this.loading = false;
+    this.loading[1] = "Chargement des Pokemons en cours...";
+    this.allPokemons = await getAllPokemon();
+    this.loading[0] = false;
   },
   methods: {
     setOrder(newOrder){
@@ -113,17 +112,9 @@ export default {
         if(res != null){
           this.myPokemons.push(res)
         }
-    }, scaleUp(event){
-        anime({
-            targets: event.target,
-            translateX: [Math.floor(Math.random()*10),-Math.floor(Math.random()*10),Math.floor(Math.random()*10),-Math.floor(Math.random()*10),0],
-            translateY: [Math.floor(Math.random()*10),-Math.floor(Math.random()*10),Math.floor(Math.random()*10),-Math.floor(Math.random()*10),0],
-            easing: 'easeInOutSine',
-            duration: 500,
-        });
     },orderPokeBy() {
       if(this.order === 'date'){
-        return this.myPokemons
+        return [...this.myPokemons].sort((a, b) => b.id - a.id)
       }else if(this.order === 'pokedex') {
         return [...this.myPokemons].sort((a, b) => a.pokemonId - b.pokemonId)
       }
@@ -134,8 +125,9 @@ export default {
 </script>
 
 <template>
-    <div v-if="loading">
-        <img class="loadingGif center" src="../assets/images/loading.gif">
+    <div v-if="loading[0]">
+        <img class="loadingGif" src="../assets/images/loading.gif">
+        <h3 class="loadingMessage">{{loading[1]}}</h3>
     </div>
     <div v-else>
         <div class="card-container">
@@ -157,7 +149,7 @@ export default {
                 </div>
                 <div class="col ">  
                     <div class="dropdown">
-                        <button class="btn btn-primary dropdown-toggle center" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                             Trier
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -180,19 +172,16 @@ export default {
 #pokedexFrom{
     font-size: 120%;
 }
-.typeImage{
-    width: 15%;
-}
 .pokeballPic{
     width: 10%;
 }
-.center{
+.loadingGif, .loadingMessage{
+    width: 20%;
     display: block;
     margin-left: auto;
     margin-right: auto;
-}
-.loadingGif{
-    width: 20%;
+    font-style: oblique;
+    text-align: center;
 }
 .card-container
 {

@@ -1,8 +1,10 @@
 <script>
 import { getAllLikedByUserId, getAllByAuthorId } from "@/utils/backendRequests"
 import { getAllPokemon } from "@/utils/pokebuildApi";
+import TeamCard from "@/components/TeamCard.vue";
 
 export default {
+  components: {TeamCard},
   data() {
     return {
       teams: [],
@@ -15,14 +17,13 @@ export default {
       this.$router.push({name: 'login'});
       return;
     }
-    let res = await getAllLikedByUserId(localStorage.token, localStorage.pseudo)
-    if (res === 401) {
+    this.allPokemons = await getAllPokemon()
+    this.teams = await getAllLikedByUserId(localStorage.token, localStorage.pseudo)
+    if (this.teams === 401) {
       localStorage.clear()
       this.$router.push({name: 'login'});
       return;
     }
-    this.allPokemons = await getAllPokemon()
-    this.teams = res
     this.loading = false
   },
   methods: {
@@ -43,8 +44,6 @@ export default {
         return;
       }
       this.teams = res
-    }, showImage(id) {
-      return this.allPokemons[id-1].sprite
     }
   }
 }
@@ -66,21 +65,9 @@ export default {
         </div>
       </div>
     </div>
-    <div class="card" style="width: 100%;">
-      <div class="card-body">
-        <h5 class="card-title">Pokemon Team</h5>
-        <div class="container">
-          <div v-for="t in teams" class="row">
-            <div v-for="p in t.pokemons" class="col">
-              <img :src="showImage(p)" class="imagePokemon">
-            </div>
-            <div class="nrbHearts">
-              {{ t.likes.length }} <img src='../assets/heart.png' class="heart">
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <RouterLink v-for="team in teams" :to="'/teams/'.concat(team.id)" class="card" style="width: 100%;">
+      <TeamCard :team="team" :all-pokemons="allPokemons"/>
+    </RouterLink>
   </div>
 </template>
 

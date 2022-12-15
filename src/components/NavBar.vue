@@ -29,9 +29,6 @@ export default {
                         <RouterLink to="/collection" class="nav-link">Collection</RouterLink>
                     </li>
                     <li class="nav-item">
-                        <RouterLink to="/teams/1" class="nav-link">Team</RouterLink>
-                    </li>
-                    <li class="nav-item">
                         <RouterLink to="/tuto" class="nav-link">Tutoriel</RouterLink>
                     </li>
                 </ul>
