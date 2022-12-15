@@ -1,5 +1,4 @@
 <script>
-import pokeball from '../assets/pokeball.png';
 import { getAllPokemon, getDefensiveCoverage, getPokemonsFromGen, getPokemonsFromType, getAllType } from '../utils/pokebuildApi';
 import { createTeam } from '../utils/backendRequests';
 
@@ -14,7 +13,6 @@ export default {
     filterAxises: ["gen", "types"],
     pokemonTeamPointer: -1,
     pokemonTeam: [ -1,-1,-1,-1,-1,-1 ],
-    pokeball: pokeball,
   }),
   async created() {
     this.loading[1] = "Chargement des types en cours...";
@@ -106,7 +104,7 @@ export default {
             <div v-for="index in pokemonTeam.length" class="col">
                 <div v-if="pokemonTeam[index-1] == -1">
                     <div v-bind:id="'PokemonSlot'+index">
-                        <img :src="pokeball" class="teamPic">
+                        <img src="../assets/pokeball.png" class="teamPic">
                     </div>
                 </div>
                 <div v-else>

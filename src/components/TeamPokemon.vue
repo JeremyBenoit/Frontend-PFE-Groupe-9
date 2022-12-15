@@ -48,7 +48,7 @@ export default {
       <StrenghtAndWeakness :wOrf="wOrf"/>
     </div>
     <div class="comments">
-      <h3>Comments</h3>
+      <h3>Commentaires</h3>
       <div v-for="(comment) in comments" class="row">
         <div class="col">
           <p>{{comment.authorId}} : {{comment.content}}</p>

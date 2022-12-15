@@ -70,14 +70,14 @@ export default {
       <div class="card-body">
         <h5 class="card-title">Pokemon Team</h5>
         <div class="container">
-          <div v-for="t in teams" class="row">
+          <RouterLink v-for="t in teams" :to="'/teams/'.concat(t.id)" class="row" tag="div">
             <div v-for="p in t.pokemons" class="col">
               <img :src="showImage(p)" class="imagePokemon">
             </div>
             <div class="nrbHearts">
               {{ t.likes.length }} <img src='../assets/heart.png' class="heart">
             </div>
-          </div>
+          </RouterLink>
         </div>
       </div>
     </div>

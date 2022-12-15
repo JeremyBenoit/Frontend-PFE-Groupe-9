@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseURL = "http://localhost:9000";
+const baseURL = "http://pokemon-team-maker-api-dev.eu-west-3.elasticbeanstalk.com";
 
 async function login (pseudo, password) {
     try {   
