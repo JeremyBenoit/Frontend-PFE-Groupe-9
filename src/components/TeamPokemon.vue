@@ -1,12 +1,8 @@
 <script>
-import {getOneTeamById} from "@/utils/teamsAPI";
-import {getDefensiveCoverage} from "@/utils/pokebuildApi";
-export default {
-  props:['teamId'],
-};
+export default {props:['teamId']};
 </script>
 
-<script setup>
+<script setup >
 import OneTeamCard from "@/components/OneTeamCard.vue";
 import {getDefensiveCoverage} from "@/utils/pokebuildApi";
 import StrenghtAndWeakness from "@/components/StrenghtAndWeakness.vue";

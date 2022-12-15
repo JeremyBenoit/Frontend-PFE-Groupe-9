@@ -2,7 +2,7 @@
 import {getAllPokemon} from "@/utils/pokebuildApi";
 import heart from '../assets/heart.png';
 import OnePokemonCard from "@/components/OnePokemonCard.vue";
-import {getOneTeamById} from "@/utils/teamsAPI";
+import {getOneTeamById} from "@/utils/backendRequests";
 
 const allPokemon = await getAllPokemon()
 let likes = 3;

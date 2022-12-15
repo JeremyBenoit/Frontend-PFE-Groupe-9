@@ -11,8 +11,8 @@ import TeamBuilder from '../components/TeamBuilder.vue'
             <TeamBuilder />
         </template>
         <template #fallback>
-            <div class="spinner-border text-primary" role="status">
-                <span class="visually-hidden" id="spinner">Loading...</span>
+            <div role="status">
+                <img class="loadingGif center" src="../assets/images/loading.gif">
             </div>
         </template>
     </Suspense>
@@ -21,9 +21,12 @@ import TeamBuilder from '../components/TeamBuilder.vue'
 </template>
 
 <style scoped>
-.spinner-border {
-    margin-left: 45%;
-    margin-top: 20px;
-    margin-bottom: 20px;
+.center{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.loadingGif{
+  width: 20%;
 }
 </style>
