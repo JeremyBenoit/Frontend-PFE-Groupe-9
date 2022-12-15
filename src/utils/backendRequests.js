@@ -2,7 +2,7 @@ import axios from "axios";
 const baseURL = "http://localhost:9000";
 
 async function login (pseudo, password) {
-    try {
+    try {   
         const res = await axios.post(baseURL.concat("/connect"), {
             pseudo: pseudo,
             password: password
@@ -66,7 +66,7 @@ async function getAllCollection(id, token) {
 
 async function addPokemonToCollection(userId, pokemonId, token) {
     try {
-        let res = await axios.post(baseURL.concat(`/collections/`),
+        let res = await axios.post(baseURL.concat(`/collections`),
         {
             pokemonId: pokemonId,
             userId: userId
@@ -92,7 +92,7 @@ async function getOneTeamById(id) {
 
 async function getAllTeam() {
     try {
-        const response = await axios.get(baseURL.concat('/teams/'))
+        const response = await axios.get(baseURL.concat('/teams'))
         return response.data;
     } catch (err) {
         console.error("error: ", err);
@@ -138,6 +138,24 @@ async function createComment(userId,teamId,content){
     }
 }
 
+async function createTeam(name, creatorId, pokemons, token) {
+    try {
+        let res = await axios.post(baseURL.concat(`/teams`),
+        {
+            name: name,
+            creatorId: creatorId,
+            pokemons: pokemons,
+        },{
+                headers: {
+                    'Authorization': token
+                }
+            })
+        return res.data
+    } catch (e){
+        return null
+    }
+}
+
 export {
     login,
     register,
@@ -147,6 +165,7 @@ export {
     addPokemonToCollection,
     getOneTeamById,
     getAllTeam,
+    createTeam,
     createLike,
     getAllComment,
     createComment
