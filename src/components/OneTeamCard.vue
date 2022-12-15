@@ -1,30 +1,48 @@
-<script setup>
-import {getAllPokemon} from "@/utils/pokebuildApi";
-import heart from '../assets/heart.png';
+<script>
 import OnePokemonCard from "@/components/OnePokemonCard.vue";
-import {getOneTeamById} from "@/utils/backendRequests";
+import {createLike} from "@/utils/backendRequests";
 
-const allPokemon = await getAllPokemon()
-let likes = 3;
+export default {
+  components:{OnePokemonCard},
+  props:['team','likes','teamId'],
+  data: () => {
+    return { liked:false}
+  },
+  created() {
+    for (let like in this.likes) {
+      if (this.likes[like].userId === localStorage.pseudo){
+        this.liked = true;
+      }
+    }
+  },
+  methods:{
+    async addLike(){
+      const res = await createLike(localStorage.pseudo,this.teamId);
+      if (res.status === 200){
+        this.likes.push(res);
+        this.liked = true;
+      }
+    }
+  }
+}
 </script>
 <template>
   <div class="row pokemonTeam">
-    <div v-for="(poke) in team" class="col">
+    <div v-for="poke in team" class="col">
       <div>
-        <OnePokemonCard :pokemon="allPokemon.at(poke-1)" />
+        <OnePokemonCard :pokemon="poke" />
       </div>
     </div>
-    <div class="nrbHearts">
-      <p id="likes">{{likes}} <img :src="heart" class="heart" alt="heart"></p>
+    <div class="nrbHearts" v-if="liked">
+      <p id="likes">{{likes.length}} <img src="../assets/heart.png" class="heart" alt="heart"></p>
+    </div>
+    <div class="nrbHearts" v-else>
+      <button @click="addLike()">
+        <p id="likes">{{likes.length}} <img src="../assets/heartEmpty.png" class="heart" alt="heart"></p>
+      </button>
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  props:['team']
-}
-</script>
 
 <style scoped>
 .heart {

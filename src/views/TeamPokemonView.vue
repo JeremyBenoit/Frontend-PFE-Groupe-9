@@ -5,17 +5,7 @@ import TeamPokemon from '../components/TeamPokemon.vue'
 </script>
 <template>
   <NavBar />
-  <Suspense>
-    <template #default>
-      <TeamPokemon :teamId="$route.params.id"/>
-    </template>
-    <template #fallback>
-      <div role="status">
-        <img class="loadingGif center" src="../assets/images/loading.gif">
-      </div>
-    </template>
-  </Suspense>
-
+  <TeamPokemon :teamId="$route.params.id"/>
   <Footer />
 </template>
 
