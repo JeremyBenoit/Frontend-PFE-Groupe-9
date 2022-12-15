@@ -11,4 +11,6 @@ phases:
       - echo PostBuild Phase
 artifacts:
   files:
-    - 'dist/'
+    - '**/*'
+  base-directory: 'dist/'
+  discard-paths: no
