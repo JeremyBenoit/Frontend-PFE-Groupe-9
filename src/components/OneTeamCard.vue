@@ -20,7 +20,7 @@ export default {
   methods:{
     async addLike(){
       const res = await createLike(localStorage.pseudo,this.teamId);
-      if (res.status != null){
+      if (res != null){
         this.likes.push(res);
         this.liked = true;
       }
