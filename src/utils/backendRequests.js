@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseURL = "http://pokemon-team-maker-api-dev.eu-west-3.elasticbeanstalk.com";
+const baseURL = "http:/localhost:9000";
 
 async function login (pseudo, password) {
     try {   
@@ -95,7 +95,7 @@ async function getAllTeam() {
         const response = await axios.get(baseURL.concat('/teams'))
         return response.data;
     } catch (err) {
-        console.error("error: ", err);
+        console.error("error: ", err.message);
     }
 }
 async function createLike(userId,teamId){
